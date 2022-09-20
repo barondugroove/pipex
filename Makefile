@@ -3,16 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: bchabot <marvin@42.fr>                     +#+  +:+       +#+         #
+#    By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/13 12:26:21 by bchabot           #+#    #+#              #
-#    Updated: 2022/09/13 15:20:39 by bchabot          ###   ########.fr        #
+#    Updated: 2022/09/20 16:23:43 by bchabot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 SRCS = srcs/pipex.c \
 		srcs/parse_data.c \
-		srcs/pipex_utils.c
+		srcs/pipex_utils.c \
+		srcs/check_errors.c
 
 CC = gcc
 
@@ -26,7 +27,7 @@ OBJS = $(SRCS:.c=.o)
 
 all : $(NAME)
 
-%.o : %.c 
+%.o : %.c
 	$(CC) $(CFLAGS) -c $< -o $@
 
 $(LIBFT) :
@@ -35,7 +36,7 @@ $(LIBFT) :
 
 $(NAME): $(OBJS) $(LIBFT)
 	$(CC) $(OBJS) $(LIBFT) -o $(NAME)
-	@echo "\033[100m\033[1m\033[92mProgram compiled and ready to exacute."
+	@echo "\033[100m\033[1m\033[92mProgram compiled and ready to execute."
 
 clean :
 	rm -f $(OBJS)
