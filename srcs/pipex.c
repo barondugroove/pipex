@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 16:28:54 by bchabot           #+#    #+#             */
-/*   Updated: 2022/09/27 19:29:33 by bchabot          ###   ########.fr       */
+/*   Updated: 2022/09/28 16:16:21 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,11 @@ int	main(int ac, char **av, char **env)
 	data = ft_set_data();
 	if (ac == 5)
 		parse_data(data, av, env);
+	else
+	{
+		write(2, "Arguments Error\n", 16);
+		return (0);
+	}
 	if (check_errors(data))
 	{
 		exit(0);
@@ -59,12 +64,12 @@ int	main(int ac, char **av, char **env)
 		waitpid(-1, NULL, 0);
 		fd_file[1] = open(data->files[1], O_WRONLY | O_TRUNC | O_CREAT, 0600);
 		dup2(fd_pipe[0], STDIN_FILENO);
+		dup2(fd_file[1], STDOUT_FILENO);
 		if ((execve(strjoin_pipex(data->path, data->cmd2[0]), data->cmd2, env)) == -1)
 		{
 			write(2, "Error\n", 6);
 			return (1);
 		}
-		dup2(STDOUT_FILENO, fd_file[1]);
 		close(fd_file[1]);
 	}
 	close(fd_pipe[0]);
