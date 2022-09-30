@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 12:26:12 by bchabot           #+#    #+#             */
-/*   Updated: 2022/09/28 21:10:50 by bchabot          ###   ########.fr       */
+/*   Updated: 2022/09/29 14:32:41 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,9 @@ void	get_correct_path(t_data	*data, char **env);
 void	ft_free_struct(t_data *data);
 void	ft_free_files(t_data *data);
 
-int		execute_command1(t_data *data, int fd_pipe[2], int fd_file[2]);
-int		execute_command2(t_data *data, int fd_pipe[2], int fd_file[2]);
+int		execute_command1(t_data *data, int fd_pipe[2]);
+//int		execute_command1(t_data *data, int fd_pipe[2], int fd_file[2]);
+int		execute_command2(t_data *data, int fd_pipe[2]);
+//int		execute_command2(t_data *data, int fd_pipe[2], int fd_file[2]);
 
 #endif
