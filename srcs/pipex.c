@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/27 16:28:54 by bchabot           #+#    #+#             */
-/*   Updated: 2022/09/29 15:00:43 by bchabot          ###   ########.fr       */
+/*   Updated: 2022/10/01 16:55:34 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ int	main(int ac, char **av, char **env)
 {
 	t_data	data;
 	int		fd_pipe[2];
+	int		i;
 
 	if (ac == 5)
 		parse_data(&data, av, env);
@@ -34,9 +35,7 @@ int	main(int ac, char **av, char **env)
 	free(data.files[1]);
 	close(fd_pipe[0]);
 	close(fd_pipe[1]);
-	int i;
 	i = 0;
-	//free(data.env);
 	while (data.cmd[i])
 		free(data.cmd[i++]);
 	free(data.cmd);

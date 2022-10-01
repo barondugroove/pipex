@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   child_actions.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bchabot <bchabot@student->42->fr>            +#+  +:+       +#+        */
+/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/28 20:30:57 by bchabot           #+#    #+#             */
-/*   Updated: 2022/09/29 14:36:12 by bchabot          ###   ########.fr       */
+/*   Created: 2022/10/01 16:48:55 by bchabot           #+#    #+#             */
+/*   Updated: 2022/10/01 16:49:00 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 int	execute_command1(t_data *data, int fd_pipe[2])
 {
-	int pid;
-	int fd;
+	int	pid;
+	int	fd;
 
 	pid = fork();
 	if (pid == -1)
@@ -33,7 +33,8 @@ int	execute_command1(t_data *data, int fd_pipe[2])
 		close(fd_pipe[0]);
 		close(fd_pipe[1]);
 		close(fd);
-		if ((execve(strjoin_pipex(data->path, data->cmd[0]), data->cmd, data->env)) == -1)
+		if ((execve(strjoin_pipex(data->path, data->cmd[0]), data->cmd,
+					data->env)) == -1)
 		{
 			write(2, "Error\n", 6);
 			return (1);
@@ -63,7 +64,8 @@ int	execute_command2(t_data *data, int fd_pipe[2])
 		close(fd);
 		close(fd_pipe[0]);
 		close(fd_pipe[1]);
-		if ((execve(strjoin_pipex(data->path, data->cmd2[0]), data->cmd2, data->env)) == -1)
+		if ((execve(strjoin_pipex(data->path, data->cmd2[0]), data->cmd2,
+					data->env)) == -1)
 		{
 			write(2, "Error\n", 6);
 			return (1);

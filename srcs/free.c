@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/28 19:27:12 by bchabot           #+#    #+#             */
-/*   Updated: 2022/09/28 19:40:12 by bchabot          ###   ########.fr       */
+/*   Updated: 2022/10/01 16:49:29 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ void	ft_free_struct(t_data *data)
 	int	i;
 
 	i = 0;
-	if(data->cmd)
+	if (data->cmd)
 		while (data->cmd[i])
 			free(data->cmd[i++]);
 	i = 0;
@@ -35,6 +35,5 @@ void	ft_free_struct(t_data *data)
 			free(data->cmd2[i++]);
 	if (data->path)
 		free(data->path);
-	//free(data->env);
 	free(data);
 }
