@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 16:48:55 by bchabot           #+#    #+#             */
-/*   Updated: 2022/10/01 16:49:00 by bchabot          ###   ########.fr       */
+/*   Updated: 2022/10/04 19:30:50 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	execute_command1(t_data *data, int fd_pipe[2])
 	pid = fork();
 	if (pid == -1)
 	{
-		write(2, "ERROR\n", 6);
+		write(2, "Error\n", 6);
 		return (1);
 	}
 	if (pid == 0)
@@ -51,7 +51,7 @@ int	execute_command2(t_data *data, int fd_pipe[2])
 	pid = fork();
 	if (pid == -1)
 	{
-		write(2, "ERROR\n", 6);
+		write(2, "Error\n", 6);
 		return (1);
 	}
 	if (pid == 0)

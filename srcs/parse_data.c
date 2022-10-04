@@ -6,13 +6,13 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 12:32:41 by bchabot           #+#    #+#             */
-/*   Updated: 2022/10/01 19:35:46 by bchabot          ###   ########.fr       */
+/*   Updated: 2022/10/04 19:51:36 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "pipex.h"
 
-void	get_correct_path(t_data *data, char **env)
+int	get_correct_path(t_data *data, char **env, int y)
 {
 	char	**tab;
 	int		i;
@@ -28,15 +28,15 @@ void	get_correct_path(t_data *data, char **env)
 			tab = ft_split(env[i], ':');
 			while (tab[x])
 			{
-				str = strjoin_pipex(tab[x], data->cmd[0]);
-				if ((access(str, F_OK | R_OK) != -1))
+				str = strjoin_pipex(tab[x], data->cmd[y]);
+				if ((access(str, X_OK) != -1))
 				{
 					free(str);
 					data->path = ft_strdup((const char *)tab[x]);
 					while (tab[x])
 						free(tab[x++]);
 					free(tab);
-					return ;
+					return (0);
 				}
 				free(str);
 				free(tab[x++]);
@@ -45,9 +45,10 @@ void	get_correct_path(t_data *data, char **env)
 		i++;
 	}
 	free(tab);
+	return (1);
 }
 
-void	parse_data(t_data *data, char **av, char **env)
+int	parse_data(t_data *data, char **av, char **env)
 {
 	data->files[0] = ft_strdup((const char *)av[1]);
 	data->files[1] = ft_strdup((const char *)av[4]);
@@ -56,5 +57,7 @@ void	parse_data(t_data *data, char **av, char **env)
 	data->env = env;
 	data->cmd = ft_split(av[2], ' ');
 	data->cmd2 = ft_split(av[3], ' ');
-	get_correct_path(data, env);
+	if (get_correct_path(data, env, 0))
+		get_correct_path(data, env, 1);
+	return (0);
 }
