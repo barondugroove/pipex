@@ -5,52 +5,80 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/19 17:34:20 by bchabot           #+#    #+#             */
-/*   Updated: 2022/10/04 19:40:58 by bchabot          ###   ########.fr       */
+/*   Created: 2022/10/09 18:46:53 by bchabot           #+#    #+#             */
+/*   Updated: 2022/10/09 19:00:10 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../includes/pipex.h"
 
-int	is_file_ok(t_data *data)
+int	check_error_files(char *file, int s)
 {
-	int	fds[2];
+	int	fd;
 
-	fds[0] = open(data->files[0], O_RDONLY);
-	if (fds[0] == -1)
-	{
-		close(fds[0]);
-		return (0);
-	}
-	fds[1] = open(data->files[1], O_WRONLY | O_TRUNC | O_CREAT, 0644);
-	if (fds[1] == -1)
-	{
-		close(fds[0]);
-		close(fds[1]);
-		return (0);
-	}
-	close(fds[0]);
-	close(fds[1]);
-	return (1);
-}
-
-int	is_cmd_ok(t_data *data, int x)
-{
-	char	*str;
-
-	if (x == 0)
-		str = strjoin_pipex(data->path, data->cmd[0]);
+	if (s)
+		fd = open(file, O_WRONLY | O_TRUNC | O_CREAT, 0600);
 	else
-		str = strjoin_pipex(data->path, data->cmd[1]);
-	if ((access(str, X_OK) == -1))
+		fd = open(file, O_RDONLY);
+	if (fd == -1)
 	{
-		free(str);
-		return (0);
-	}
-	else
-	{
-		free(str);
+		close(fd);
 		return (1);
 	}
+	return (0);
 }
 
+int	check_error_cmd(t_data *data, char *cmd)
+{
+	int		i;
+	char	*str;
+
+	i = 0;
+	if (cmd[0] == '/' || cmd[0] == '.')
+	{
+		str = ft_strdup(cmd);
+		if (access(str, X_OK) == -1)
+		{
+			free(str);
+			return (1);
+		}
+		return (0);
+	}
+	else
+	{
+		while (data->path[i])
+		{
+			str = strjoin_pipex(data->path[i++], cmd);
+			if (access(str, X_OK) == -1)
+			{
+				free(str);
+				return (1);
+			}
+			free(str);
+		}
+	}
+	return (0);
+}
+
+int	check_errors(t_data *data)
+{
+	if (check_error_cmd(data, data->cmd[0]) && check_error_cmd(data, data->cmd2[0]))
+	{
+		ft_printf("Both commands are undoable.\n");
+		free_struct(data);
+		return (1);
+	}
+	if ((check_error_cmd(data, data->cmd2[0])))
+	{
+		ft_printf("Second command is undoable.\n");
+		free_struct(data);
+		return (2);
+	}
+	if (check_error_files(data->files[0], 0) || check_error_cmd(data, data->cmd[0]))
+	{
+	//	free(data->cmd);
+	//	free(data->file[0]);
+		// exec cmd2
+	}
+	return (0);
+}

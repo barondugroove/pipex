@@ -5,39 +5,36 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/09/27 16:28:54 by bchabot           #+#    #+#             */
-/*   Updated: 2022/10/04 19:33:01 by bchabot          ###   ########.fr       */
+/*   Created: 2022/10/05 16:21:53 by bchabot           #+#    #+#             */
+/*   Updated: 2022/10/09 18:56:55 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "pipex.h"
+#include "../includes/pipex.h"
+
+void	print_data(t_data *data)
+{
+	int	i;
+
+	i = 0;
+	ft_printf("%s\n", data->files[0]);
+	ft_printf("%s\n", data->cmd[0]);
+	ft_printf("%s\n", data->cmd2[0]);
+	ft_printf("%s\n", data->files[1]);
+	while (data->path[i])
+		ft_printf("%s\n", data->path[i++]);
+	return ;
+}
 
 void	pipex(char **av, char **env)
 {
 	t_data	data;
-	int		fd_pipe[2];
-	int		i;
 
-	if (pipe(fd_pipe) == -1)
-		return ;
 	parse_data(&data, av, env);
-	if (is_cmd_ok(&data, 0) && is_cmd_ok(&data, 1))
-		return ;
-	waitpid(-1, NULL, 0);
-	execute_command2(&data, fd_pipe);
-	free(data.path);
-	free(data.files[0]);
-	free(data.files[1]);
-	close(fd_pipe[0]);
-	close(fd_pipe[1]);
-	i = 0;
-	while (data.cmd[i])
-		free(data.cmd[i++]);
-	free(data.cmd);
-	i = 0;
-	while (data.cmd2[i])
-		free(data.cmd2[i++]);
-	free(data.cmd2);
+	check_errors(&data);
+//	print_data(&data);
+//	free_struct(&data);
+	//exec cmd2
 }
 
 int	main(int ac, char **av, char **env)
@@ -46,7 +43,7 @@ int	main(int ac, char **av, char **env)
 		pipex(av, env);
 	else
 	{
-		write(2, "Arguments Error\n", 16);
+		perror("Wrong number of arguments. Please try again.");
 		return (1);
 	}
 	return (0);
