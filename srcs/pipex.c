@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:21:53 by bchabot           #+#    #+#             */
-/*   Updated: 2022/10/09 18:56:55 by bchabot          ###   ########.fr       */
+/*   Updated: 2022/10/10 12:53:03 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,9 +29,17 @@ void	print_data(t_data *data)
 void	pipex(char **av, char **env)
 {
 	t_data	data;
+	int	fd_pipe[2];
 
 	parse_data(&data, av, env);
-	check_errors(&data);
+	if (check_errors(&data))
+	{
+		if (pipe(fd_pipe) == -1)
+			return ;
+		execute_command1(&data, fd_pipe, env);
+	}
+	else
+		execute_command2(&data, fd_pipe, env);
 //	print_data(&data);
 //	free_struct(&data);
 	//exec cmd2

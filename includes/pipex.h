@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 12:26:12 by bchabot           #+#    #+#             */
-/*   Updated: 2022/10/09 18:47:45 by bchabot          ###   ########.fr       */
+/*   Updated: 2022/10/10 11:45:48 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,8 +42,8 @@ int		check_errors(t_data *data);
 int		check_error_files(char *file, int s);
 int		check_error_cmd(t_data *data, char *cmd);
 
-int		execute_command1(t_data *data, int fd_pipe[2]);
-int		execute_command2(t_data *data, int fd_pipe[2]);
+int		execute_command1(t_data *data, int fd_pipe[2], char **env);
+int		execute_command2(t_data *data, int fd_pipe[2], char **env);
 
 // PIPEX_UTILS
 char	*strjoin_pipex(char *str, char *av);

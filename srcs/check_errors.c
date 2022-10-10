@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 18:46:53 by bchabot           #+#    #+#             */
-/*   Updated: 2022/10/09 19:00:10 by bchabot          ###   ########.fr       */
+/*   Updated: 2022/10/10 17:54:07 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,30 +34,36 @@ int	check_error_cmd(t_data *data, char *cmd)
 	char	*str;
 
 	i = 0;
+	if (!cmd)
+	{
+		return (1);
+	}
 	if (cmd[0] == '/' || cmd[0] == '.')
 	{
 		str = ft_strdup(cmd);
-		if (access(str, X_OK) == -1)
+		if (!access(str, X_OK))
 		{
 			free(str);
-			return (1);
+			return (0);
 		}
-		return (0);
+		free(str);
+		return (1);
 	}
 	else
 	{
 		while (data->path[i])
 		{
-			str = strjoin_pipex(data->path[i++], cmd);
-			if (access(str, X_OK) == -1)
+			str = strjoin_pipex(data->path[i], cmd);
+			if (!access(str, X_OK))
 			{
 				free(str);
-				return (1);
+				return (0);
 			}
+			i++;
 			free(str);
 		}
 	}
-	return (0);
+	return (1);
 }
 
 int	check_errors(t_data *data)
@@ -66,19 +72,21 @@ int	check_errors(t_data *data)
 	{
 		ft_printf("Both commands are undoable.\n");
 		free_struct(data);
-		return (1);
+		exit (0);
 	}
-	if ((check_error_cmd(data, data->cmd2[0])))
+	if ((check_error_cmd(data, data->cmd2[0])) || check_error_files(data->files[1], 1))
 	{
-		ft_printf("Second command is undoable.\n");
+		ft_printf("Outfile or second command is erroneous.\n");
 		free_struct(data);
-		return (2);
+		exit (0);
 	}
 	if (check_error_files(data->files[0], 0) || check_error_cmd(data, data->cmd[0]))
 	{
 	//	free(data->cmd);
 	//	free(data->file[0]);
 		// exec cmd2
+		ft_printf("Infile or first command is erroneous. Only second one will be executed.\n");
+		return (1);
 	}
 	return (0);
 }
