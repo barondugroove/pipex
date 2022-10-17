@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:21:53 by bchabot           #+#    #+#             */
-/*   Updated: 2022/10/10 12:53:03 by bchabot          ###   ########.fr       */
+/*   Updated: 2022/10/17 17:05:17 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,40 +19,40 @@ void	print_data(t_data *data)
 	i = 0;
 	ft_printf("%s\n", data->files[0]);
 	ft_printf("%s\n", data->cmd[0]);
-	ft_printf("%s\n", data->cmd2[0]);
+	while (data->cmd2[i])
+		ft_printf("%s\n", data->cmd2[i++]);
 	ft_printf("%s\n", data->files[1]);
+	i = 0;
 	while (data->path[i])
 		ft_printf("%s\n", data->path[i++]);
+	write(1, "\n", 1);
 	return ;
 }
 
-void	pipex(char **av, char **env)
+void	pipex(char **av, char **envp)
 {
 	t_data	data;
-	int	fd_pipe[2];
+	int		pid;
+	int		fd_pipe[2];
 
-	parse_data(&data, av, env);
-	if (check_errors(&data))
-	{
-		if (pipe(fd_pipe) == -1)
-			return ;
-		execute_command1(&data, fd_pipe, env);
-	}
-	else
-		execute_command2(&data, fd_pipe, env);
-//	print_data(&data);
-//	free_struct(&data);
-	//exec cmd2
+	parse_data(&data, av, envp);
+	if (pipe(fd_pipe) == -1)
+		return ;
+	pid = fork();
+	if (pid == -1)
+		return ;
+	if (pid == 0 && !check_errors(&data))
+		execute_command1(&data, fd_pipe, envp);
+	waitpid(pid, NULL, 0);
+	execute_command2(&data, fd_pipe, envp);
+	free_struct(&data);
 }
 
-int	main(int ac, char **av, char **env)
+int	main(int ac, char **av, char **envp)
 {
 	if (ac == 5)
-		pipex(av, env);
+		pipex(av, envp);
 	else
-	{
-		perror("Wrong number of arguments. Please try again.");
-		return (1);
-	}
+		ft_putstr_fd("Wrong arguments number.\n", 2);
 	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 12:26:12 by bchabot           #+#    #+#             */
-/*   Updated: 2022/10/10 11:45:48 by bchabot          ###   ########.fr       */
+/*   Updated: 2022/10/17 17:12:01 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,19 +31,20 @@ typedef struct s_data {
 }	t_data;
 
 // PARSING
-void	parse_data(t_data *data, char **av, char **env);
+void	parse_data(t_data *data, char **av, char **envp);
 
 // FREE_DATA
 void	free_struct(t_data *data);
 void	ft_free_files(t_data *data);
 
 // CHECK_ERRORS
+void	ft_error(char *msg, t_data *data);
 int		check_errors(t_data *data);
 int		check_error_files(char *file, int s);
 int		check_error_cmd(t_data *data, char *cmd);
 
-int		execute_command1(t_data *data, int fd_pipe[2], char **env);
-int		execute_command2(t_data *data, int fd_pipe[2], char **env);
+int		execute_command1(t_data *data, int fd_pipe[2], char **envp);
+int		execute_command2(t_data *data, int fd_pipe[2], char **envp);
 
 // PIPEX_UTILS
 char	*strjoin_pipex(char *str, char *av);
