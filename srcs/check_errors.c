@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 18:46:53 by bchabot           #+#    #+#             */
-/*   Updated: 2022/10/17 16:12:46 by bchabot          ###   ########.fr       */
+/*   Updated: 2022/10/17 20:07:14 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,8 @@ int	check_error_files(char *file, int s)
 
 int	check_error_cmd(t_data *data, char *cmd)
 {
-	int		i;
 	char	*str;
 
-	i = 0;
 	if (!cmd)
 		return (1);
 	if (cmd[0] == '/' || cmd[0] == '.')
@@ -47,16 +45,16 @@ int	check_error_cmd(t_data *data, char *cmd)
 		free(str);
 		return (1);
 	}
-	while (data->path[i])
+	else
 	{
-		str = strjoin_pipex(data->path[i++], cmd);
+		str = get_path(data, cmd);
 		if (!access(str, X_OK))
 		{
 			free(str);
 			return (0);
 		}
-		free(str);
 	}
+	free(str);
 	return (1);
 }
 

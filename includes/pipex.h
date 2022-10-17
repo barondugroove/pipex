@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 12:26:12 by bchabot           #+#    #+#             */
-/*   Updated: 2022/10/17 17:12:01 by bchabot          ###   ########.fr       */
+/*   Updated: 2022/10/17 20:03:23 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,6 @@ int		execute_command2(t_data *data, int fd_pipe[2], char **envp);
 // PIPEX_UTILS
 char	*strjoin_pipex(char *str, char *av);
 char	*strcat_pipex(char *dst, char *src);
+char	*get_path(t_data *data, char *cmd);
 
 #endif
