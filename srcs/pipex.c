@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:21:53 by bchabot           #+#    #+#             */
-/*   Updated: 2022/10/17 19:47:21 by bchabot          ###   ########.fr       */
+/*   Updated: 2022/10/18 19:53:23 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ void	pipex(char **av, char **envp)
 		return ;
 	if (pid == 0 && !check_errors(&data))
 		execute_command1(&data, fd_pipe, envp);
-	waitpid(pid, NULL, 0);
+	waitpid(pid, NULL, -1);
 	execute_command2(&data, fd_pipe, envp);
 	free_struct(&data);
 }

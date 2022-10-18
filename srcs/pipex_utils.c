@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 21:36:26 by bchabot           #+#    #+#             */
-/*   Updated: 2022/10/17 20:06:21 by bchabot          ###   ########.fr       */
+/*   Updated: 2022/10/18 20:11:55 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,12 +59,18 @@ char	*get_path(t_data *data, char *cmd)
 		str = ft_strdup(cmd);
 		if (!access(str, X_OK))
 			return (str);
+		else
+			return (NULL);
 	}
-	while (data->path[i])
+	else
 	{
-		str = strjoin_pipex(data->path[i++], cmd);
-		if (!access(str, X_OK))
-			return (str);
+		while (data->path[i])
+		{
+			str = strjoin_pipex(data->path[i++], cmd);
+			if (!access(str, X_OK))
+				return (str);
+			free(str);
+		}
+		return (NULL);
 	}
-	return (NULL);
 }

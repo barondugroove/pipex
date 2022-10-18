@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 12:26:12 by bchabot           #+#    #+#             */
-/*   Updated: 2022/10/17 20:03:23 by bchabot          ###   ########.fr       */
+/*   Updated: 2022/10/18 16:29:13 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,8 @@ void	free_struct(t_data *data);
 void	ft_free_files(t_data *data);
 
 // CHECK_ERRORS
-void	ft_error(char *msg, t_data *data);
+void	ft_error_command(t_data *data, char *cmd);
+void	ft_error_file(t_data *data, char *file);
 int		check_errors(t_data *data);
 int		check_error_files(char *file, int s);
 int		check_error_cmd(t_data *data, char *cmd);
