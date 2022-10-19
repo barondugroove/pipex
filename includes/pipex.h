@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 12:26:12 by bchabot           #+#    #+#             */
-/*   Updated: 2022/10/18 16:29:13 by bchabot          ###   ########.fr       */
+/*   Updated: 2022/10/19 18:36:03 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@
 # include <unistd.h>
 # include <stdlib.h>
 # include <stddef.h>
+# include <string.h>
 # include <stdio.h>
+# include "errno.h"
 # include <sys/types.h>
 # include <sys/stat.h>
 # include <sys/wait.h>
@@ -38,12 +40,13 @@ void	free_struct(t_data *data);
 void	ft_free_files(t_data *data);
 
 // CHECK_ERRORS
-void	ft_error_command(t_data *data, char *cmd);
-void	ft_error_file(t_data *data, char *file);
+void	ft_error_cmd(char *cmd, int errnum);
+void	ft_error_file(char *file, int errnum);
 int		check_errors(t_data *data);
 int		check_error_files(char *file, int s);
 int		check_error_cmd(t_data *data, char *cmd);
 
+// CHILD_ACTIONS
 int		execute_command1(t_data *data, int fd_pipe[2], char **envp);
 int		execute_command2(t_data *data, int fd_pipe[2], char **envp);
 

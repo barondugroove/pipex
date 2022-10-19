@@ -3,20 +3,20 @@
 /*                                                        :::      ::::::::   */
 /*   get_next_line_utils.c                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bchabot <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/27 11:11:24 by bchabot           #+#    #+#             */
-/*   Updated: 2022/05/31 12:30:49 by bchabot          ###   ########.fr       */
+/*   Updated: 2022/10/19 15:47:35 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"libft.h"
 
-char	*ft_substr_gnl(char *s, unsigned int start, size_t len)
+char	*ft_substr_gnl(char *s, int start, int len)
 {
 	char			*buf;
-	unsigned int	i;
-	size_t			x;
+	int				i;
+	int				x;
 
 	i = 0;
 	if (s == 0 || !len)
@@ -58,11 +58,11 @@ char	*ft_strjoin_gnl(char *s1, char *s2)
 	return (tab);
 }
 
-int	ft_strlcat_gnl(char *dst, char *src, size_t size)
+int	ft_strlcat_gnl(char *dst, char *src, int size)
 {
-	size_t	dl;
-	size_t	sl;
-	size_t	i;
+	int	dl;
+	int	sl;
+	int	i;
 
 	dl = ft_strlen(dst);
 	sl = ft_strlen(src);
@@ -80,9 +80,9 @@ int	ft_strlcat_gnl(char *dst, char *src, size_t size)
 	return ((int)dl + sl);
 }
 
-int	ft_strlcpy_gnl(char *dst, char *src, size_t size)
+int	ft_strlcpy_gnl(char *dst, char *src, int size)
 {
-	size_t		i;
+	int			i;
 	char		*str;
 
 	i = 0;

@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 21:36:26 by bchabot           #+#    #+#             */
-/*   Updated: 2022/10/18 20:11:55 by bchabot          ###   ########.fr       */
+/*   Updated: 2022/10/19 12:15:34 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ char	*strcat_pipex(char *dst, char *src)
 
 char	*get_path(t_data *data, char *cmd)
 {
-	char 	*str;
+	char	*str;
 	int		i;
 
 	i = 0;

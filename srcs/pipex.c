@@ -6,28 +6,11 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:21:53 by bchabot           #+#    #+#             */
-/*   Updated: 2022/10/18 19:53:23 by bchabot          ###   ########.fr       */
+/*   Updated: 2022/10/19 18:33:00 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
-
-void	print_data(t_data *data)
-{
-	int	i;
-
-	i = 0;
-	ft_printf("%s\n", data->files[0]);
-	ft_printf("%s\n", data->cmd[0]);
-	while (data->cmd2[i])
-		ft_printf("%s\n", data->cmd2[i++]);
-	ft_printf("%s\n", data->files[1]);
-	i = 0;
-	while (data->path[i])
-		ft_printf("%s\n", data->path[i++]);
-	write(1, "\n", 1);
-	return ;
-}
 
 void	pipex(char **av, char **envp)
 {
@@ -41,10 +24,12 @@ void	pipex(char **av, char **envp)
 	pid = fork();
 	if (pid == -1)
 		return ;
-	if (pid == 0 && !check_errors(&data))
+	if (pid == 0)
 		execute_command1(&data, fd_pipe, envp);
 	waitpid(pid, NULL, -1);
 	execute_command2(&data, fd_pipe, envp);
+	close(fd_pipe[0]);
+	close(fd_pipe[1]);
 	free_struct(&data);
 }
 

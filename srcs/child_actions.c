@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 16:48:55 by bchabot           #+#    #+#             */
-/*   Updated: 2022/10/18 19:47:39 by bchabot          ###   ########.fr       */
+/*   Updated: 2022/10/19 18:40:27 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,19 +19,26 @@ int	execute_command1(t_data *data, int fd_pipe[2], char **envp)
 
 	fd = open(data->files[0], O_RDONLY);
 	if (fd < 0)
+	{
+		ft_error_file(data->files[0], errno);
 		return (1);
+	}
 	dup2(fd, STDIN_FILENO);
 	dup2(fd_pipe[1], STDOUT_FILENO);
 	close(fd_pipe[0]);
 	str = get_path(data, data->cmd[0]);
 	if (!str)
+	{
+		ft_error_cmd(data->cmd[0], errno);
 		return (1);
+	}
 	if (!access(str, X_OK))
 	{
 		if ((execve(str, data->cmd, envp)) == -1)
 		{
 			free(str);
-			return (1);
+			ft_error_cmd(data->cmd[0], errno);
+			return (errno);
 		}
 	}
 	free(str);

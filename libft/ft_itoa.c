@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   ft_itoa.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: bchabot <marvin@42.fr>                     +#+  +:+       +#+        */
+/*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:27:20 by bchabot           #+#    #+#             */
-/*   Updated: 2022/04/16 17:43:19 by bchabot          ###   ########.fr       */
+/*   Updated: 2022/10/19 15:17:01 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"libft.h"
 
-int	ft_intlen(int n)
+static int	ft_intlen(int n)
 {
 	int	i;
 
