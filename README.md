@@ -1,4 +1,4 @@
-# Pipex
+<div align="center"> # Pipex </div>
 
 <div align="center">
   <br>
