@@ -1,4 +1,6 @@
-<div align="center"> # Pipex </div>
+<div align="center"> 
+  <h1>Pipex</h1>
+</div>
 
 <div align="center">
   <br>
