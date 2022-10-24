@@ -6,7 +6,7 @@
 #    By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/09/13 12:26:21 by bchabot           #+#    #+#              #
-#    Updated: 2022/10/24 18:16:39 by bchabot          ###   ########.fr        #
+#    Updated: 2022/10/24 19:02:22 by bchabot          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ SRCS = srcs/pipex.c \
 		srcs/pipex_utils.c \
 		srcs/errors.c \
 		srcs/free_data.c \
-		srcs/child_actions.c
+		srcs/exec_commands.c
 
 CC = gcc
 
