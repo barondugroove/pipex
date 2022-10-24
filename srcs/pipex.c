@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/05 16:21:53 by bchabot           #+#    #+#             */
-/*   Updated: 2022/10/24 18:30:52 by bchabot          ###   ########.fr       */
+/*   Updated: 2022/10/24 21:39:10 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,16 +27,17 @@ int	pipex(char **av, char **envp)
 		return (errno);
 	if (pid == 0)
 		first_cmd(&data, fd_pipe, envp);
-	waitpid(pid, NULL, -1);
+	waitpid(pid, NULL, 0);
 	pid2 = fork();
 	if (pid2 == -1)
 		return (errno);
 	if (pid2 == 0)
 		second_cmd(&data, fd_pipe, envp);
-	waitpid(pid2, NULL, -1);
-	free_struct(&data);
 	close(fd_pipe[0]);
 	close(fd_pipe[1]);
+	waitpid(pid, NULL, 0);
+	waitpid(pid2, NULL, 0);
+	free_struct(&data);
 	return (0);
 }
 

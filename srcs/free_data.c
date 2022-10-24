@@ -6,11 +6,18 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/09 17:11:57 by bchabot           #+#    #+#             */
-/*   Updated: 2022/10/09 17:46:35 by bchabot          ###   ########.fr       */
+/*   Updated: 2022/10/24 21:39:54 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
+
+void	ft_close(int fd, int fd2)
+{
+	close(fd);
+	close(fd2);
+	return ;
+}
 
 void	free_struct(t_data *data)
 {
