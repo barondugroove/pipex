@@ -6,13 +6,23 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 16:48:55 by bchabot           #+#    #+#             */
-/*   Updated: 2022/10/19 18:40:27 by bchabot          ###   ########.fr       */
+/*   Updated: 2022/10/24 18:30:50 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-int	execute_command1(t_data *data, int fd_pipe[2], char **envp)
+int	execute_cmds(char *str, char **cmd, char **envp)
+{
+	if (execve(str, cmd, envp) == -1)
+	{
+		error_cmd(cmd[0]);
+		return (errno);
+	}
+	return (0);
+}
+
+int	first_cmd(t_data *data, int fd_pipe[2], char **envp)
 {
 	int		fd;
 	char	*str;
@@ -20,8 +30,8 @@ int	execute_command1(t_data *data, int fd_pipe[2], char **envp)
 	fd = open(data->files[0], O_RDONLY);
 	if (fd < 0)
 	{
-		ft_error_file(data->files[0], errno);
-		return (1);
+		error_file(data->files[0], errno);
+		return (errno);
 	}
 	dup2(fd, STDIN_FILENO);
 	dup2(fd_pipe[1], STDOUT_FILENO);
@@ -29,45 +39,39 @@ int	execute_command1(t_data *data, int fd_pipe[2], char **envp)
 	str = get_path(data, data->cmd[0]);
 	if (!str)
 	{
-		ft_error_cmd(data->cmd[0], errno);
-		return (1);
+		error_cmd(data->cmd[0]);
+		return (errno);
 	}
-	if (!access(str, X_OK))
-	{
-		if ((execve(str, data->cmd, envp)) == -1)
-		{
-			free(str);
-			ft_error_cmd(data->cmd[0], errno);
-			return (errno);
-		}
-	}
+	if (execute_cmds(str, data->cmd, envp))
+		return (errno);
+	close(fd);
 	free(str);
 	return (0);
 }
 
-int	execute_command2(t_data *data, int fd_pipe[2], char **envp)
+int	second_cmd(t_data *data, int fd_pipe[2], char **envp)
 {
 	char	*str;
 	int		fd;
 
 	fd = open(data->files[1], O_WRONLY | O_TRUNC | O_CREAT, 0600);
 	if (fd < 0)
-		return (1);
-	dup2(fd, STDOUT_FILENO);
+	{
+		error_file(data->files[1], errno);
+		return (errno);
+	}
 	dup2(fd_pipe[0], STDIN_FILENO);
+	dup2(fd, STDOUT_FILENO);
 	close(fd_pipe[1]);
-	close(fd);
 	str = get_path(data, data->cmd2[0]);
 	if (!str)
-		return (1);
-	if (!access(str, X_OK))
 	{
-		if ((execve(str, data->cmd2, envp)) == -1)
-		{
-			free(str);
-			return (1);
-		}
+		error_cmd(data->cmd2[0]);
+		return (errno);
 	}
+	if (execute_cmds(str, data->cmd2, envp))
+		return (errno);
+	close(fd);
 	free(str);
 	return (0);
 }

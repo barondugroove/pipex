@@ -6,21 +6,15 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 12:26:12 by bchabot           #+#    #+#             */
-/*   Updated: 2022/10/19 18:36:03 by bchabot          ###   ########.fr       */
+/*   Updated: 2022/10/24 18:35:12 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PIPEX_H
 # define PIPEX_H
 
-# include <unistd.h>
-# include <stdlib.h>
-# include <stddef.h>
 # include <string.h>
-# include <stdio.h>
-# include "errno.h"
-# include <sys/types.h>
-# include <sys/stat.h>
+# include <errno.h>
 # include <sys/wait.h>
 # include <fcntl.h>
 # include "../libft/libft.h"
@@ -39,16 +33,14 @@ void	parse_data(t_data *data, char **av, char **envp);
 void	free_struct(t_data *data);
 void	ft_free_files(t_data *data);
 
-// CHECK_ERRORS
-void	ft_error_cmd(char *cmd, int errnum);
-void	ft_error_file(char *file, int errnum);
-int		check_errors(t_data *data);
-int		check_error_files(char *file, int s);
-int		check_error_cmd(t_data *data, char *cmd);
+// ERRORS
+void	error_cmd(char *cmd);
+void	error_file(char *file, int errnum);
 
 // CHILD_ACTIONS
-int		execute_command1(t_data *data, int fd_pipe[2], char **envp);
-int		execute_command2(t_data *data, int fd_pipe[2], char **envp);
+int		execute_cmds(char *str, char **cmd, char **envp);
+int		first_cmd(t_data *data, int fd_pipe[2], char **envp);
+int		second_cmd(t_data *data, int fd_pipe[2], char **envp);
 
 // PIPEX_UTILS
 char	*strjoin_pipex(char *str, char *av);

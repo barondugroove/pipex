@@ -1,35 +1,26 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   parsing.c                                          :+:      :+:    :+:   */
+/*   errors.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/05 16:29:30 by bchabot           #+#    #+#             */
-/*   Updated: 2022/10/24 18:52:08 by bchabot          ###   ########.fr       */
+/*   Created: 2022/10/09 18:46:53 by bchabot           #+#    #+#             */
+/*   Updated: 2022/10/24 18:30:49 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/pipex.h"
 
-void	parse_data(t_data *data, char **av, char **envp)
+void	error_cmd(char *cmd)
 {
-	int	i;
+	ft_putstr_fd("command not found: ", 2);
+	ft_putendl_fd(cmd, 2);
+}
 
-	i = 0;
-	data->files[0] = av[1];
-	data->files[1] = av[4];
-	data->cmd = ft_split(av[2], ' ' );
-	data->cmd2 = ft_split(av[3], ' ' );
-	if (data->cmd[0] == NULL)
-		error_cmd("");
-	if (data->cmd2[0] == NULL)
-		error_cmd("");
-	while (envp[i])
-	{
-		if (ft_strnstr(envp[i], "PATH=/", ft_strlen("PATH=/")))
-			data->path = ft_split(envp[i], ':');
-		i++;
-	}
-	return ;
+void	error_file(char *file, int errnum)
+{
+	ft_putstr_fd(strerror(errnum), 2);
+	ft_putstr_fd(": ", 2);
+	ft_putendl_fd(file, 2);
 }
