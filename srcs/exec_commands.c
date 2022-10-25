@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 16:48:55 by bchabot           #+#    #+#             */
-/*   Updated: 2022/10/25 16:02:31 by bchabot          ###   ########.fr       */
+/*   Updated: 2022/10/25 18:20:33 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,12 +34,13 @@ int	first_cmd(t_data *data, int fd_pipe[2], char **envp)
 	{
 		error_file(data->files[0], errno);
 		free_struct(data);
-		close(fd_pipe[0]);
+		ft_close(fd_pipe[0], fd_pipe[1]);
 		exit (1);
 	}
 	dup2(fd, STDIN_FILENO);
 	dup2(fd_pipe[1], STDOUT_FILENO);
 	ft_close(fd_pipe[0], fd);
+	close(fd_pipe[1]);
 	str = get_path(data, data->cmd[0]);
 	if (!str)
 	{
@@ -49,7 +50,6 @@ int	first_cmd(t_data *data, int fd_pipe[2], char **envp)
 		exit (1);
 	}
 	execute_cmds(str, data->cmd, envp);
-	free(str);
 	exit (1);
 }
 
@@ -62,13 +62,14 @@ int	second_cmd(t_data *data, int fd_pipe[2], char **envp)
 	if (fd < 0)
 	{
 		error_file(data->files[1], errno);
+		ft_close(fd_pipe[1], fd_pipe[0]);
 		free_struct(data);
-		close(fd_pipe[1]);
 		exit (1);
 	}
 	dup2(fd_pipe[0], STDIN_FILENO);
 	dup2(fd, STDOUT_FILENO);
 	ft_close(fd_pipe[1], fd);
+	close(fd_pipe[0]);
 	str = get_path(data, data->cmd2[0]);
 	if (!str)
 	{
@@ -78,6 +79,5 @@ int	second_cmd(t_data *data, int fd_pipe[2], char **envp)
 		exit (1);
 	}
 	execute_cmds(str, data->cmd2, envp);
-	free(str);
 	exit (1);
 }

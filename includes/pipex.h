@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/09/13 12:26:12 by bchabot           #+#    #+#             */
-/*   Updated: 2022/10/24 21:35:52 by bchabot          ###   ########.fr       */
+/*   Updated: 2022/10/25 16:42:13 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,13 @@ void	parse_data(t_data *data, char **av, char **envp);
 
 // FREE_DATA
 void	free_struct(t_data *data);
-void	ft_free_files(t_data *data);
-void	ft_close(int fd, int fd1);
+void	ft_close(int fd, int fd2);
 
 // ERRORS
 void	error_cmd(char *cmd);
 void	error_file(char *file, int errnum);
 
-// CHILD_ACTIONS
+// EXEC_COMMANDS
 int		execute_cmds(char *str, char **cmd, char **envp);
 int		first_cmd(t_data *data, int fd_pipe[2], char **envp);
 int		second_cmd(t_data *data, int fd_pipe[2], char **envp);
