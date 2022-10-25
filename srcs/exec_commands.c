@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 16:48:55 by bchabot           #+#    #+#             */
-/*   Updated: 2022/10/24 21:44:29 by bchabot          ###   ########.fr       */
+/*   Updated: 2022/10/25 13:00:24 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int	first_cmd(t_data *data, int fd_pipe[2], char **envp)
 	if (fd < 0)
 	{
 		error_file(data->files[0], errno);
-		ft_close(fd_pipe[0], fd);
+		close(fd_pipe[0]);
 		return (errno);
 	}
 	dup2(fd, STDIN_FILENO);
@@ -61,7 +61,7 @@ int	second_cmd(t_data *data, int fd_pipe[2], char **envp)
 	if (fd < 0)
 	{
 		error_file(data->files[1], errno);
-		ft_close(fd_pipe[1], fd);
+		close(fd_pipe[1]);
 		return (errno);
 	}
 	dup2(fd_pipe[0], STDIN_FILENO);
