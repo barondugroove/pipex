@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/01 16:48:55 by bchabot           #+#    #+#             */
-/*   Updated: 2022/10/25 13:00:24 by bchabot          ###   ########.fr       */
+/*   Updated: 2022/10/25 16:02:31 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@ int	execute_cmds(char *str, char **cmd, char **envp)
 	if (execve(str, cmd, envp) == -1)
 	{
 		error_cmd(cmd[0]);
-		return (errno);
+		return (1);
 	}
 	return (0);
 }
@@ -33,8 +33,9 @@ int	first_cmd(t_data *data, int fd_pipe[2], char **envp)
 	if (fd < 0)
 	{
 		error_file(data->files[0], errno);
+		free_struct(data);
 		close(fd_pipe[0]);
-		return (errno);
+		exit (1);
 	}
 	dup2(fd, STDIN_FILENO);
 	dup2(fd_pipe[1], STDOUT_FILENO);
@@ -44,12 +45,12 @@ int	first_cmd(t_data *data, int fd_pipe[2], char **envp)
 	{
 		error_cmd(data->cmd[0]);
 		ft_close(fd_pipe[0], fd);
-		return (errno);
+		free_struct(data);
+		exit (1);
 	}
-	if (execute_cmds(str, data->cmd, envp))
-		return (errno);
+	execute_cmds(str, data->cmd, envp);
 	free(str);
-	return (0);
+	exit (1);
 }
 
 int	second_cmd(t_data *data, int fd_pipe[2], char **envp)
@@ -61,8 +62,9 @@ int	second_cmd(t_data *data, int fd_pipe[2], char **envp)
 	if (fd < 0)
 	{
 		error_file(data->files[1], errno);
+		free_struct(data);
 		close(fd_pipe[1]);
-		return (errno);
+		exit (1);
 	}
 	dup2(fd_pipe[0], STDIN_FILENO);
 	dup2(fd, STDOUT_FILENO);
@@ -72,10 +74,10 @@ int	second_cmd(t_data *data, int fd_pipe[2], char **envp)
 	{
 		error_cmd(data->cmd2[0]);
 		ft_close(fd_pipe[1], fd);
-		return (errno);
+		free_struct(data);
+		exit (1);
 	}
-	if (execute_cmds(str, data->cmd2, envp))
-		return (errno);
+	execute_cmds(str, data->cmd2, envp);
 	free(str);
-	return (0);
+	exit (1);
 }
