@@ -6,7 +6,7 @@
 /*   By: bchabot <bchabot@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/31 21:36:26 by bchabot           #+#    #+#             */
-/*   Updated: 2022/10/25 16:52:57 by bchabot          ###   ########.fr       */
+/*   Updated: 2022/11/01 16:55:09 by bchabot          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,8 @@ char	*get_path(t_data *data, char *cmd)
 	int		i;
 
 	i = 0;
+	if (!cmd)
+		return (NULL);
 	if (cmd[0] == '/' || cmd[0] == '.')
 	{
 		str = ft_strdup(cmd);
